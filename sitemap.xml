@@ -3,73 +3,73 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/tags/bugbounty/</loc>
+    <loc>https://hacksplained.it/tags/bugbounty/</loc>
     <lastmod>2020-05-12T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/</loc>
+    <loc>https://hacksplained.it/</loc>
     <lastmod>2020-05-12T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/blog/</loc>
+    <loc>https://hacksplained.it/blog/</loc>
     <lastmod>2020-05-12T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/</loc>
+    <loc>https://hacksplained.it/tags/</loc>
     <lastmod>2020-05-12T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/blog/starting-a-bug-bounty-program/</loc>
+    <loc>https://hacksplained.it/blog/starting-a-bug-bounty-program/</loc>
     <lastmod>2020-05-12T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/categories/</loc>
+    <loc>https://hacksplained.it/categories/</loc>
     <lastmod>2020-02-02T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/portfolio/owasp-juice-shop/</loc>
+    <loc>https://hacksplained.it/portfolio/owasp-juice-shop/</loc>
     <lastmod>2020-02-02T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/categories/owasp-juice-shop/</loc>
+    <loc>https://hacksplained.it/categories/owasp-juice-shop/</loc>
     <lastmod>2020-02-02T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/portfolio/</loc>
+    <loc>https://hacksplained.it/portfolio/</loc>
     <lastmod>2020-02-02T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/categories/walkthroughs/</loc>
+    <loc>https://hacksplained.it/categories/walkthroughs/</loc>
     <lastmod>2020-02-02T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/funfacts/</loc>
+    <loc>https://hacksplained.it/funfacts/</loc>
   </url>
   
   <url>
-    <loc>http://example.org/call-to-action/</loc>
+    <loc>https://hacksplained.it/call-to-action/</loc>
   </url>
   
   <url>
-    <loc>http://example.org/banner/</loc>
+    <loc>https://hacksplained.it/banner/</loc>
   </url>
   
   <url>
-    <loc>http://example.org/about/</loc>
+    <loc>https://hacksplained.it/about/</loc>
   </url>
   
   <url>
-    <loc>http://example.org/contact/</loc>
+    <loc>https://hacksplained.it/contact/</loc>
   </url>
   
 </urlset>

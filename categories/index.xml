@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Hacksplained</title>
-    <link>http://example.org/categories/</link>
+    <link>https://hacksplained.it/categories/</link>
     <description>Recent content in Categories on Hacksplained</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2021 Hacksplained</copyright>
     <lastBuildDate>Sun, 02 Feb 2020 12:14:34 +0600</lastBuildDate>
     
-	<atom:link href="http://example.org/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://hacksplained.it/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Owasp Juice Shop</title>
-      <link>http://example.org/categories/owasp-juice-shop/</link>
+      <link>https://hacksplained.it/categories/owasp-juice-shop/</link>
       <pubDate>Sun, 02 Feb 2020 12:14:34 +0600</pubDate>
       
-      <guid>http://example.org/categories/owasp-juice-shop/</guid>
+      <guid>https://hacksplained.it/categories/owasp-juice-shop/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Walkthroughs</title>
-      <link>http://example.org/categories/walkthroughs/</link>
+      <link>https://hacksplained.it/categories/walkthroughs/</link>
       <pubDate>Sun, 02 Feb 2020 12:14:34 +0600</pubDate>
       
-      <guid>http://example.org/categories/walkthroughs/</guid>
+      <guid>https://hacksplained.it/categories/walkthroughs/</guid>
       <description></description>
     </item>
     
