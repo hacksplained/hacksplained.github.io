@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://example.org/tags/bugbounty/</loc>
+    <lastmod>2020-05-12T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/</loc>
+    <lastmod>2020-05-12T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/blog/</loc>
+    <lastmod>2020-05-12T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/</loc>
+    <lastmod>2020-05-12T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/blog/starting-a-bug-bounty-program/</loc>
+    <lastmod>2020-05-12T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/categories/</loc>
+    <lastmod>2020-02-02T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/portfolio/owasp-juice-shop/</loc>
+    <lastmod>2020-02-02T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/categories/owasp-juice-shop/</loc>
+    <lastmod>2020-02-02T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/portfolio/</loc>
+    <lastmod>2020-02-02T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/categories/walkthroughs/</loc>
+    <lastmod>2020-02-02T12:14:34+06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://example.org/funfacts/</loc>
+  </url>
+  
+  <url>
+    <loc>http://example.org/call-to-action/</loc>
+  </url>
+  
+  <url>
+    <loc>http://example.org/banner/</loc>
+  </url>
+  
+  <url>
+    <loc>http://example.org/about/</loc>
+  </url>
+  
+  <url>
+    <loc>http://example.org/contact/</loc>
+  </url>
+  
+</urlset>
