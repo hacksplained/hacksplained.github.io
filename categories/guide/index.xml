@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Guide on Hacksplained</title>
+    <link>https://hacksplained.it/categories/guide/</link>
+    <description>Recent content in Guide on Hacksplained</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright &amp;copy; 2021 Hacksplained</copyright>
+    <lastBuildDate>Sun, 26 Apr 2020 12:14:34 +0600</lastBuildDate>
+    
+	<atom:link href="https://hacksplained.it/categories/guide/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Burp Suite</title>
+      <link>https://hacksplained.it/portfolio/burp-suite/</link>
+      <pubDate>Sun, 26 Apr 2020 12:14:34 +0600</pubDate>
+      
+      <guid>https://hacksplained.it/portfolio/burp-suite/</guid>
+      <description>Burp Suite is the web app pentester&amp;rsquo;s favorite tool. There is probably no other tool in the world that finds heavier usage during manual pentest engagements than this one.</description>
+    </item>
+    
+  </channel>
+</rss>

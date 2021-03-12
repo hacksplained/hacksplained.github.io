@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>Python Dependency Confusion</title>
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description"
+    content="Write-up how dependency confusion works in Python">
+  
+  <meta name="author" content="somrat">
+  <meta name="generator" content="Hugo 0.66.0" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  
+  <link rel="stylesheet" href="https://hacksplained.it/plugins/bootstrap/bootstrap.min.css">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&amp;display=swap">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  
+  <link rel="stylesheet" href="https://hacksplained.it/plugins/hover/hover.css">
+  
+  <link rel="stylesheet" href="https://hacksplained.it/plugins/magnific-popup/magnific-popup.css">
+  
+  <link rel="stylesheet" href="https://hacksplained.it/plugins/owl-carousel/owl.carousel.min.css">
+  
+  <link rel="stylesheet" href="https://hacksplained.it/plugins/owl-carousel/owl.theme.default.min.css">
+  
+  <link rel="stylesheet" href="https://hacksplained.it/plugins/text-animation/text-animation.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://hacksplained.it/css/style.min.css" media="screen">
+
+  
+  
+  <link rel="stylesheet" href="https://hacksplained.it/css/custom.min.css" media="screen">
+
+  
+  <link rel="shortcut icon" href="https://hacksplained.it/images/logo.png" type="image/x-icon">
+  <link rel="icon" href="https://hacksplained.it/images/logo.png" type="image/x-icon">
+
+  
+  
+
+  
+  <meta property="og:image" content="https://hacksplained.it/images/blog/python-dependency-confusion/python.jpg" />
+  
+  <meta property="og:title" content="Python Dependency Confusion" />
+<meta property="og:description" content="Write-up how dependency confusion works in Python" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hacksplained.it/blog/python-dependency-confusion/" />
+<meta property="article:published_time" content="2021-03-05T12:14:34+06:00" />
+<meta property="article:modified_time" content="2021-03-05T12:14:34+06:00" />
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-191459238-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</head><body>
+<!-- preloader start -->
+<div class="preloader">
+  
+  <img src="https://hacksplained.it/images/preloader.gif" alt="preloader">
+  
+</div>
+<!-- preloader end -->
+
+<section class="menu menu-fix" id="home">
+  <nav>
+    
+    <div class="menu-container menu-normal">
+      <ul class="desktop-menu list-inline mb-0 justify-content-end" id="desktop-menu">
+        <a class="mr-auto" href="/">
+          
+          <img class="img-fluid" width="150px" src="https://hacksplained.it/images/logo-dark.png"
+            alt="Hacksplained">
+          
+        </a>
+        
+        <li class="menu-item menu-item-transparent dark hvr-underline-from-left 1"><a href="https://hacksplained.it/">Home</a></li>
+        
+        <li class="menu-item menu-item-transparent dark hvr-underline-from-left 1"><a href="https://hacksplained.it#about">About me</a></li>
+        
+        <li class="menu-item menu-item-transparent dark hvr-underline-from-left 1"><a href="https://hacksplained.it#portfolio">Portfolio</a></li>
+        
+        <li class="menu-item menu-item-transparent dark hvr-underline-from-left 1"><a href="https://hacksplained.it#contact">Contact</a></li>
+        
+        <li class="menu-item menu-item-transparent dark hvr-underline-from-left 1"><a href="https://hacksplained.it/blog">Blog</a></li>
+        
+      </ul>
+      
+      
+
+      
+      <div class="mobile-menu">
+        <a class="menu-link">
+          <div class="mobile-menu-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </a>
+        <div class="mobile-menu-logo"><a href="/"><img class="img-fluid"
+              src="https://hacksplained.it/images/logo-dark.png" alt="Hacksplained"></a>
+        </div>
+        <div class="menu-slider">
+          <nav>
+            <ul class="mobile-menu-list">
+              
+              <li class="hvr-shutter-out-vertical mobile-menu-item 1"><a href="https://hacksplained.it/">Home</a></li>
+              
+              <li class="hvr-shutter-out-vertical mobile-menu-item 1"><a href="https://hacksplained.it#about">About me</a></li>
+              
+              <li class="hvr-shutter-out-vertical mobile-menu-item 1"><a href="https://hacksplained.it#portfolio">Portfolio</a></li>
+              
+              <li class="hvr-shutter-out-vertical mobile-menu-item 1"><a href="https://hacksplained.it#contact">Contact</a></li>
+              
+              <li class="hvr-shutter-out-vertical mobile-menu-item 1"><a href="https://hacksplained.it/blog">Blog</a></li>
+              
+            </ul>
+            
+            <ul class="mobile-menu-icons list-inline">
+              
+              <li><a href="https://twitter.com/Hacksplained"><i class="fab fa-twitter"></i></a></li>
+              
+              <li><a href="https://twitter.com/PascalSec"><i class="fab fa-twitter"></i></a></li>
+              
+              <li><a href="https://www.instagram.com/hacksplained"><i class="fab fa-instagram"></i></a></li>
+              
+              <li><a href="https://github.com/hacksplained"><i class="fab fa-github"></i></a></li>
+              
+              <li><a href="https://www.linkedin.com/in/pascalschulz/"><i class="fab fa-linkedin"></i></a></li>
+              
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </nav>
+</section>
+
+<div style="height: 50px;"></div>
+
+
+
+
+
+<style></style>
+<section class="section " >
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mb-4 mb-lg-0">
+        <div class="wow fadeInUp" data-wow-duration="1.5s">
+          <img src="https://hacksplained.it/images/blog/python-dependency-confusion/python.jpg" alt="image" class="img-fluid w-100 mb-5">
+          <div class="about-me-text mb-4">
+            <h1>Python Dependency Confusion</h1>
+          </div>
+          <div class="content"><h2 id="how-does-dependency-confusion-in-python-look-like">How does dependency confusion in Python look like?</h2>
+<p>Recently, <a href="https://twitter.com/alxbrsn">Alex Birsan</a> shocked a lot of blue teams around the world by bringing up the topic of dependency confusion. If you have not read the write-up yet with the clickbaity title <em>&ldquo;Dependency Confusion: How I Hacked Into Apple, Microsoft and Dozens of Other Companies&rdquo;</em>, do that now. <a href="https://medium.com/@alex.birsan/dependency-confusion-4a5d60fec610">Click to read.</a></p>
+<p>In his article, he talks about his findings in the Javascript, Python and Ruby universe with his focus set on the former. As most penetration testers are usually more acquainted with Python, I want to touch Python dependency confusion a little more in this blog post.</p>
+<p>For that, we first have to understand how dependencies are managed in Python. It all starts with a <em>requirements.txt</em> file, which can look as simple as this:</p>
+<p><img src="/images/blog/python-dependency-confusion/requirements_txt.png" alt="requirements.txt"></p>
+<p>In the screenshot above, the only dependency we would download is the super useful <a href="https://requests.readthedocs.io/en/master/">requests library</a>. In order to download all the dependencies listed in that file, you would run:</p>
+<p><code>python -m pip install -r requirements.txt</code></p>
+<p>Typically, you would specify a specific dependency version which has been properly tested in order to ensure that your software runs smoothly. This can be achieved by using two equal signs:</p>
+<p><code>requests==2.25.1</code> <em>(latest version at the time of writing)</em></p>
+<p>However, Python pip allows additional ways to select the version:</p>
+<p><code>requests&gt;2,&lt;3</code> <em>(version has to be greater 2 but less than 3)</em></p>
+<p><code>requests~=2.25.0</code> <em>(version can be any minor version of 2.25 (e.g. 2.25.5); equal to ==2.25.*)</em></p>
+<p>Additionally, we have to understand where Python pip is loading all the dependencies from. If not closer specified, pip tries to obtain the libraries from <a href="https://pypi.org/">PyPi</a> (the official Python package index).</p>
+<h3 id="but-the-requests-library-is-a-public-lib-what-can-go-wrong">But the requests library is a public lib, what can go wrong?</h3>
+<p>Dependency confusion comes into play if you need to depend on libraries which you (or your company) do not want to make public. Those are typically built and stored in an artifactory, such as <a href="https://jfrog.com/artifactory/">JFrog artifactory</a>. Python pip supports two ways to specify an alternate index:</p>
+<p><code>python -m pip install -r requirements.txt --index-url &lt;your internal artifactory domain&gt;</code> <em>(download only possible from your internal artifactory)</em></p>
+<p><code>python -m pip install -r requirements.txt --extra-index-url &lt;your internal artifactory domain&gt;</code> <em>(download possible from your internal artifactory or PyPi)</em></p>
+<p>You might already see that the second variant is making things a little more interesting.</p>
+<h3 id="okay-so-how-would-i-get-exploited">Okay, so how would I get exploited?</h3>
+<p><em>Disclaimer: All results listed below have been tested on my local system running PIP v21.0.1</em></p>
+<p>We are building an artificial case here. Hacksplained Inc. (a company dealing with extremely delicate information) is running an internal Python application depending on a library called <em>hacksplained</em>.</p>
+<p>For some unknown reason, the CI/CD pipeline was configured to use the potentially dangerous <code>python -m pip install -r requirements.txt --extra-index-url &lt;hacksplained.example.artifactory&gt;</code> command to download all dependencies.</p>
+<p><img src="/images/blog/python-dependency-confusion/hacksplained_pypi.png" alt="hacksplained PyPi"></p>
+<p>The infamous <em>hacksplained</em> library is not available and registered yet on Python&rsquo;s package index (see screenshot).</p>
+<p>The requirements.txt file contains the line:</p>
+<p><code>hacksplained</code> <em>(You would get exploited if the attacker registers the hacksplained library with a higher version number than the one hosted on your local package index)</em></p>
+<p><code>hacksplained~=1.10</code> <em>(You would get exploited if the attacker registers the hacksplained library with a version number &gt;=1.10, e.g. 1.999; You would not get exploited if the attacker registers 2.999)</em></p>
+<p><code>hacksplained&gt;2,&lt;3</code> <em>(Assumption: the latest version in your artifactory is hacksplained 2.27; You would get exploited if the attacker registers the hacksplained library with any version number that is within the limit; Even lower versions than the one in your artifactory are chosen over yours; You would not get exploited if the attacker registers e.g. 3.999)</em></p>
+<p><code>hacksplained==2.27</code> <em>(You would only get exploited if the attacker registers 2.27 on PyPi)</em></p>
+<p>Generally speaking, an attacker would have to:</p>
+<ul>
+<li>Guess or get a hint of an internally used library name</li>
+<li>Register the library name on PyPi</li>
+<li>Choose a version number that would trick Python pip into using the rogue package (according to the limitations listed above)</li>
+<li>Hope that the requirement install process was set up in a way that hybrid package loading (from multiple indices) takes place</li>
+</ul>
+<p>If all stars align for the attacker, he could then go ahead and extract all confidential information of Hacksplained Inc. :(</p>
+<h3 id="how-can-i-defend-myself">How can I defend myself?</h3>
+<ul>
+<li>Use Python pip with the &ldquo;&ndash;index-url&rdquo; parameter if possible</li>
+<li>If hybrid indices (multiple indices) are needed, make sure to study the dependency confusion prevention mechanisms of your artifactory software</li>
+</ul>
+<h3 id="check-out-my-youtube-video-to-get-a-better-understanding">Check out my Youtube video to get a better understanding</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NNB2m0Tjy74" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<h3 id="additional-sources">Additional sources</h3>
+<ul>
+<li><a href="https://packaging.python.org/tutorials/installing-packages/">https://packaging.python.org/tutorials/installing-packages/</a></li>
+<li><a href="https://jfrog.com/blog/yet-another-case-for-using-exclude-patterns-in-remote-repositories/">https://jfrog.com/blog/yet-another-case-for-using-exclude-patterns-in-remote-repositories/</a></li>
+</ul>
+</div>
+
+          
+          <div class="tags mt-4 content">
+            <i class="fas fa-tags mr-2"></i>
+             <a
+              href="https://hacksplained.it/tags/python">Python</a>, <a
+              href="https://hacksplained.it/tags/vulnerability">Vulnerability</a>
+          </div>
+          
+
+          
+          
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="bg-white sticky-top wow fadeInUp" data-wow-duration="1.5s" style="top: 80px;">
+          <div class="widget">
+            <h3 class="widget-title">Tags</h3>
+            <ul class="list-unstyled widget-list">
+              <li><a href="/tags/bugbounty">Bugbounty&nbsp;&nbsp;(1)</a></li>
+              <li><a href="/tags/python">Python&nbsp;&nbsp;(1)</a></li>
+              <li><a href="/tags/vulnerability">Vulnerability&nbsp;&nbsp;(1)</a></li>
+            </ul>
+          </div>
+
+          <div class="widget">
+            <h3 class="widget-title">Related Post</h3>
+            
+            
+            <ul class="list-unstyled widget-list">
+              <li class="media widget-post align-items-center">
+                
+                <a href="https://hacksplained.it/blog/starting-a-bug-bounty-program/">
+                  <img class="widget-img" src="https://hacksplained.it/images/portfolio/bounty.jpg" alt="The time when I started a bug bounty program">
+                </a>
+                
+                <div class="media-body">
+                  <h5 class="h6 mb-0"><a href="https://hacksplained.it/blog/starting-a-bug-bounty-program/">The time when I started a bug bounty program</a></h5>
+                  <small>May 12, 2020</small>
+                </div>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+	<footer class="footer-bg fadeInUp wow" data-wow-duration="1.5s">
+  <div class="container">
+    <div class="row">
+      <div class="footer col-lg-10 offset-lg-1">
+        <hr>
+        <ul class="footer-icons list-inline">
+          
+          <li><a href="https://twitter.com/Hacksplained"><i class="fab fa-twitter"></i></a></li>
+          
+          <li><a href="https://twitter.com/PascalSec"><i class="fab fa-twitter"></i></a></li>
+          
+          <li><a href="https://www.instagram.com/hacksplained"><i class="fab fa-instagram"></i></a></li>
+          
+          <li><a href="https://github.com/hacksplained"><i class="fab fa-github"></i></a></li>
+          
+          <li><a href="https://www.linkedin.com/in/pascalschulz/"><i class="fab fa-linkedin"></i></a></li>
+          
+        </ul>
+        <div class="to-top">
+          <a href="#home"><i class="fa fa-chevron-up"></i></a>
+        </div>
+        <div class="credit content">
+          Copyright © 2021 Hacksplained
+        </div>
+      </div>
+    </div>
+  </div>
+</footer><!-- JS Plugins -->
+
+<script src="https://hacksplained.it/plugins/jQuery/jquery.min.js"></script>
+
+<script src="https://hacksplained.it/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="https://hacksplained.it/plugins/wow.min.js"></script>
+
+<script src="https://hacksplained.it/plugins/text-animation/text-animation.js"></script>
+
+<script src="https://hacksplained.it/plugins/jquery.waypoints.min.js"></script>
+
+<script src="https://hacksplained.it/plugins/shuffle/shuffle.min.js"></script>
+
+<script src="https://hacksplained.it/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+<script src="https://hacksplained.it/plugins/owl-carousel/owl.carousel.min.js"></script>
+
+
+<!-- Main Script -->
+
+<script src="https://hacksplained.it/js/script.min.js"></script>
+
+<!-- google analitycs -->
+</body>
+
+</html>
