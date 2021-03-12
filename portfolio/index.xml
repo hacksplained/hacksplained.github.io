@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2021 Hacksplained</copyright>
-    <lastBuildDate>Sun, 02 Feb 2020 12:14:34 +0600</lastBuildDate>
+    <lastBuildDate>Sun, 26 Apr 2020 12:14:34 +0600</lastBuildDate>
     
 	<atom:link href="https://hacksplained.it/portfolio/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Burp Suite</title>
+      <link>https://hacksplained.it/portfolio/burp-suite/</link>
+      <pubDate>Sun, 26 Apr 2020 12:14:34 +0600</pubDate>
+      
+      <guid>https://hacksplained.it/portfolio/burp-suite/</guid>
+      <description>Burp Suite is the web app pentester&amp;rsquo;s favorite tool. There is probably no other tool in the world that finds heavier usage during manual pentest engagements than this one.</description>
+    </item>
     
     <item>
       <title>OWASP Juice Shop</title>
