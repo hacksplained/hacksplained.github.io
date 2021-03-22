@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-us"><head>
   <meta charset="utf-8">
-  <title>Python Dependency Confusion</title>
+  <title>Make Burp Community feel a little more like Burp Professional</title>
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description"
-    content="Write-up how dependency confusion works in Python">
+    content="Multiple tips and tricks to improve Burp Suite Community Edition">
   
   <meta name="author" content="somrat">
   <meta name="generator" content="Hugo 0.66.0" />
@@ -47,14 +47,14 @@
   
 
   
-  <meta property="og:image" content="https://hacksplained.it/images/blog/python-dependency-confusion/python.jpg" />
+  <meta property="og:image" content="https://hacksplained.it/images/blog/burp-community-to-pro/burp-gopro.png" />
   
-  <meta property="og:title" content="Python Dependency Confusion" />
-<meta property="og:description" content="Write-up how dependency confusion works in Python" />
+  <meta property="og:title" content="Make Burp Community feel a little more like Burp Professional" />
+<meta property="og:description" content="Multiple tips and tricks to improve Burp Suite Community Edition" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://hacksplained.it/blog/python-dependency-confusion/" />
-<meta property="article:published_time" content="2021-03-05T12:14:34+06:00" />
-<meta property="article:modified_time" content="2021-03-05T12:14:34+06:00" />
+<meta property="og:url" content="https://hacksplained.it/blog/make-more-out-of-burp-community/" />
+<meta property="article:published_time" content="2021-03-20T12:14:34+06:00" />
+<meta property="article:modified_time" content="2021-03-20T12:14:34+06:00" />
 
   
 <script type="application/javascript">
@@ -166,77 +166,77 @@ if (!doNotTrack) {
     <div class="row">
       <div class="col-lg-8 mb-4 mb-lg-0">
         <div class="wow fadeInUp" data-wow-duration="1.5s">
-          <img src="https://hacksplained.it/images/blog/python-dependency-confusion/python.jpg" alt="image" class="img-fluid w-100 mb-5">
+          <img src="https://hacksplained.it/images/blog/burp-community-to-pro/burp-gopro.png" alt="image" class="img-fluid w-100 mb-5">
           <div class="about-me-text mb-4">
-            <h1>Python Dependency Confusion</h1>
+            <h1>Make Burp Community feel a little more like Burp Professional</h1>
           </div>
-          <div class="content"><h2 id="how-does-dependency-confusion-in-python-look-like">How does dependency confusion in Python look like?</h2>
-<p>Recently, <a href="https://twitter.com/alxbrsn">Alex Birsan</a> shocked a lot of blue teams around the world by bringing up the topic of dependency confusion. If you have not read the write-up yet with the clickbaity title <em>&ldquo;Dependency Confusion: How I Hacked Into Apple, Microsoft and Dozens of Other Companies&rdquo;</em>, do that now. <a href="https://medium.com/@alex.birsan/dependency-confusion-4a5d60fec610">Click to read.</a></p>
-<p>In his article, he talks about his findings in the Javascript, Python and Ruby universe with his focus set on the former. As most penetration testers are usually more acquainted with Python, I want to touch Python dependency confusion a little more in this blog post.</p>
-<p>For that, we first have to understand how dependencies are managed in Python. It all starts with a <em>requirements.txt</em> file, which can look as simple as this:</p>
+          <div class="content"><h2 id="how-to-get-more-out-of-your-free-burp-suite-community-edition">How to get more out of your free Burp Suite Community Edition?</h2>
+<p>Alright, let&rsquo;s start with something important. Do not use any sort of cracked version of Burp Suite Professional. Using illegally acquired software is not cool. Also, Portswigger (the company behind Burp Suite) is just super awesome to the community. This most of all starts with the community edition offering that comes entirely for free! Apart from that, they have the absolute best <a href="https://portswigger.net/web-security">free web app sec training</a> existing on the market.</p>
+<p>However, the community edition does indeed have quite heavy limitations. In this blog post, we are going to look into a couple of examples. I am going to show you how you can overcome those restrictions to some extent!</p>
+<h3 id="search">Search</h3>
+<p>Yes, something as simple as searching for a specific string or using a regex to find the needle in your big stack of recorded requests goes a long way towards successful exploitation.</p>
+<p>Portswigger thinks so too and does not allow you to do that.</p>
 <figure>
-    <img src="/images/blog/python-dependency-confusion/requirements_txt.png" width="100%"/> 
+    <img src="/images/blog/burp-community-to-pro/burp-search.png" width="100%"/> 
 </figure>
 
-<p>In the screenshot above, the only dependency we would download is the super useful <a href="https://requests.readthedocs.io/en/master/">requests library</a>. In order to download all the dependencies listed in that file, you would run:</p>
-<p><code>python -m pip install -r requirements.txt</code></p>
-<p>Typically, you would specify a specific dependency version which has been properly tested in order to ensure that your software runs smoothly. This can be achieved by using two equal signs:</p>
-<p><code>requests==2.25.1</code> <em>(latest version at the time of writing)</em></p>
-<p>However, Python pip allows additional ways to select the version:</p>
-<p><code>requests&gt;2,&lt;3</code> <em>(version has to be greater 2 but less than 3)</em></p>
-<p><code>requests~=2.25.0</code> <em>(version can be any minor version of 2.25 (e.g. 2.25.5); equal to ==2.25.*)</em></p>
-<p>Additionally, we have to understand where Python pip is loading all the dependencies from. If not closer specified, pip tries to obtain the libraries from <a href="https://pypi.org/">PyPi</a> (the official Python package index).</p>
-<h3 id="but-the-requests-library-is-a-public-lib-what-can-go-wrong">But the requests library is a public lib, what can go wrong?</h3>
-<p>Dependency confusion comes into play if you need to depend on libraries which you (or your company) do not want to make public. Those are typically built and stored in an artifactory, such as <a href="https://jfrog.com/artifactory/">JFrog artifactory</a>. Python pip supports two ways to specify an alternate index:</p>
-<p><code>python -m pip install -r requirements.txt --index-url &lt;your internal artifactory domain&gt;</code> <em>(download only possible from your internal artifactory)</em></p>
-<p><code>python -m pip install -r requirements.txt --extra-index-url &lt;your internal artifactory domain&gt;</code> <em>(download possible from your internal artifactory or PyPi)</em></p>
-<p>You might already see that the second variant is making things a little more interesting.</p>
-<h3 id="okay-so-how-would-i-get-exploited">Okay, so how would I get exploited?</h3>
-<p><em>Disclaimer: All results listed below have been tested on my local system running PIP v21.0.1</em></p>
-<p>We are building an artificial case here. Hacksplained Inc. (a company dealing with extremely delicate information) is running an internal Python application depending on a library called <em>hacksplained</em>.</p>
-<p>For some unknown reason, the CI/CD pipeline was configured to use the potentially dangerous <code>python -m pip install -r requirements.txt --extra-index-url &lt;hacksplained.example.artifactory&gt;</code> command to download all dependencies.</p>
+<p>Fortunately, there are absolutely superb extensions that not just add the search functionality, but also provide more features that the current Burp filter does not have.</p>
+<h5 id="flow">Flow</h5>
 <figure>
-    <img src="/images/blog/python-dependency-confusion/hacksplained_pypi.png" width="100%"/> 
+    <img src="/images/blog/burp-community-to-pro/burp-flow.png" width="100%"/> 
 </figure>
 
-<p>The infamous <em>hacksplained</em> library is not available and registered yet on Python&rsquo;s package index (see screenshot).</p>
-<p>The requirements.txt file contains the line:</p>
-<p><code>hacksplained</code> <em>(You would get exploited if the attacker registers the hacksplained library with a higher version number than the one hosted on your local package index)</em></p>
-<p><code>hacksplained~=1.10</code> <em>(You would get exploited if the attacker registers the hacksplained library with a version number &gt;=1.10, e.g. 1.999; You would not get exploited if the attacker registers 2.999)</em></p>
-<p><code>hacksplained&gt;2,&lt;3</code> <em>(Assumption: the latest version in your artifactory is hacksplained 2.27; You would get exploited if the attacker registers the hacksplained library with any version number that is within the limit; Even lower versions than the one in your artifactory are chosen over yours; You would not get exploited if the attacker registers e.g. 3.999)</em></p>
-<p><code>hacksplained==2.27</code> <em>(You would only get exploited if the attacker registers 2.27 on PyPi)</em></p>
-<p>Generally speaking, an attacker would have to:</p>
-<ul>
-<li>Guess or get a hint of an internally used library name</li>
-<li>Register the library name on PyPi</li>
-<li>Choose a version number that would trick Python pip into using the rogue package (according to the limitations listed above)</li>
-<li>Hope that the requirement install process was set up in a way that hybrid package loading (from multiple indices) takes place</li>
-</ul>
-<p>If all stars align for the attacker, he could then go ahead and extract all confidential information of Hacksplained Inc. :(</p>
-<h3 id="how-can-i-defend-myself">How can I defend myself?</h3>
-<ul>
-<li>Use Python pip with the &ldquo;&ndash;index-url&rdquo; parameter if possible</li>
-<li>If hybrid indices (multiple indices) are needed, make sure to study the dependency confusion prevention mechanisms of your artifactory software</li>
-</ul>
-<h3 id="check-out-my-youtube-video-to-get-a-better-understanding">Check out my Youtube video to get a better understanding</h3>
+<p>Find out more about Flow and its feature set <a href="https://portswigger.net/bappstore/ee1c45f4cc084304b2af4b7e92c0a49d">here</a>.</p>
+<h5 id="logger">Logger++</h5>
+<figure>
+    <img src="/images/blog/burp-community-to-pro/burp-logger.png" width="100%"/> 
+</figure>
+
+<p>Find out more about Logger++ and its feature set <a href="https://portswigger.net/bappstore/470b7057b86f41c396a97903377f3d81">here</a>.</p>
+<h3 id="generate-csrf-poc">Generate CSRF POC</h3>
+<p>Burp Suite Professional has this amazing feature where you can right-click on any request and create a CSRF POC (proof-of-concept). This is super handy during testing as it saves you time to write the .html file by yourself. Read more about the feature <a href="https://portswigger.net/burp/documentation/desktop/functions/generate-csrf-poc">here</a>.</p>
+<p>However, CSRF POCs can fortunately be crafted quite easily. Make sure to have a pre-built CSRF POC template ready to use or check out this <a href="https://github.com/merttasci/csrf-poc-generator">Github project</a> by Mert Tasci. You can just <code>git clone</code> the repository and run it with <code>python3 -m http.server</code>. After that, copy the request in question and insert it into the CSRF generator.</p>
+<figure>
+    <img src="/images/blog/burp-community-to-pro/csrf-generator.png" width="100%"/> 
+</figure>
+
+<h3 id="burp-collaborator">Burp Collaborator</h3>
+<p>I gotta say, the integrated <a href="https://portswigger.net/burp/documentation/collaborator">Burp Collaborator</a> definitely is the coolest feature in my opinion. This tool basically allows you to quickly check for e.g. SSRF (server-side request forgery) vulnerabilities by showing you all incoming DNS/HTTP/SMTP traffic.</p>
+<p>It would not be part of this blog post though, if there would not be an excellent alternative. If you are all about monitoring HTTP or DNS queries, <a href="https://requestbin.net/">requestbin.net</a> is a pretty good substitute that comes entirely for free.</p>
+<figure>
+    <img src="/images/blog/burp-community-to-pro/requestbin.png" width="100%"/> 
+</figure>
+
+<h3 id="burp-intruder">Burp Intruder</h3>
+<p>Burp Suite&rsquo;s <a href="https://portswigger.net/burp/documentation/desktop/tools/intruder/using">Intruder</a> generally speaking is part of the community edition. However, the big drawback is the request throttling in place. The community edition allows you to send approximately 1 request per second. If you think of e.g. a password enumeration attack, you would probably sit in front of your computer for longer than planet Earth&rsquo;s current existence.</p>
+<p>Luckily, there is a Burp extension called <a href="https://portswigger.net/research/turbo-intruder-embracing-the-billion-request-attack">Turbo Intruder</a> that directly comes from the man himself, <a href="https://twitter.com/albinowax">James Kettle</a> (who btw works for Portswigger).</p>
+<figure>
+    <img src="/images/blog/burp-community-to-pro/turbo-intruder.png" width="100%"/> 
+</figure>
+
+<h3 id="burp-scanner">Burp Scanner</h3>
+<p>Some people say that <a href="https://portswigger.net/burp/vulnerability-scanner">Burp Scanner</a> is the heart of the entire product. I do agree to some extent but at the same time heavily disagree. One the one hand, the scanner is a compound of excellent web application crawling technology (Burp just recently outlined the inner workings of their crawler <a href="https://portswigger.net/blog/web-application-cartography-mapping-out-burp-suites-crawler">here</a>) and an automated vulnerability scanning capability. On the other hand, it is not the feature I use most often. I actually barely use it at all.</p>
+<p>The crawling and scanning engine are both nicely integrated in Burp&rsquo;s UI but can once again be substituted with different tools. In regards to crawling, I am personally a fan of clicking through the entire web app by myself anyway. Whenever you start a penetration test or when you are going for bug bounties, make sure to fire up Burp and start browsing. This is not just feeding Burp&rsquo;s proxy tab, but also immediately gives you a great first glimpse of the application&rsquo;s behavior and purpose.</p>
+<p>Some of you might say now &ldquo;&hellip; but not all pages are directly linked&rdquo;. That&rsquo;s absolutely correct. For discovering unlinked directories and paths, I recommend to use a tool called <a href="https://github.com/ffuf/ffuf">FFUF</a>. You can check out e.g. InsiderPhD&rsquo;s <a href="https://www.youtube.com/watch?v=aN3Nayvd7FU">video</a> on how to use that tool.</p>
+<p>In regards to scanning, the best and most critical vulnerabilities still have to be found manually. While we currently see a lot of active development around pentest automation, vuln categories like business logic errors will most likely always need an actual brain figuring out the issue.</p>
+<p>The entire security community however has built hundreds of open-source tools that automate pentesting to some extent. All those tools (which cannot be mentioned in this single blog post, check out this <a href="https://github.com/S3cur3Th1sSh1t/Pentest-Tools">Github repository</a> for a start) can cover parts of Burp&rsquo;s automated scanner. If you are all about payloads, then <a href="https://github.com/swisskyrepo/PayloadsAllTheThings">PayloadAllTheThings</a> is the place to start looking.</p>
+<p>In the end, Burp&rsquo;s scanner is still really nice though, especially as it is displaying all the findings in an easy-to-understand way in the Dashboard tab. Check out this <a href="https://portswigger.net/kb/issues">page</a> to get a rough idea what the scanner is covering.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Portswigger&rsquo;s Burp Suite is arguably one of the TOP-5 pentest tools used by the entire IT-Security community. Next to its comprehensive feature set, it also comes with a very low price tag. An annual subscription is only setting you back USD 399,&ndash;.</p>
+<p>If you happen to be able to afford a Professional license, I can only recommend you to get it. If you are just starting out, or you are only hacking occasionally, then there is no need to go pro. Make use of the additional tools mentioned in this article to work around the limitations of Burp Suite Community.</p>
+<h3 id="check-out-my-youtube-video-to-get-visual-guidance">Check out my Youtube video to get visual guidance</h3>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/NNB2m0Tjy74?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="https://www.youtube.com/embed/FMGa6xBzNck?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<h3 id="additional-sources">Additional sources</h3>
-<ul>
-<li><a href="https://packaging.python.org/tutorials/installing-packages/">https://packaging.python.org/tutorials/installing-packages/</a></li>
-<li><a href="https://jfrog.com/blog/yet-another-case-for-using-exclude-patterns-in-remote-repositories/">https://jfrog.com/blog/yet-another-case-for-using-exclude-patterns-in-remote-repositories/</a></li>
-</ul>
 </div>
 
           
           <div class="tags mt-4 content">
             <i class="fas fa-tags mr-2"></i>
              <a
-              href="https://hacksplained.it/tags/python">Python</a>, <a
-              href="https://hacksplained.it/tags/vulnerability">Vulnerability</a>
+              href="https://hacksplained.it/tags/burpsuite">Burpsuite</a>
           </div>
           
 
@@ -263,13 +263,13 @@ if (!doNotTrack) {
             <ul class="list-unstyled widget-list">
               <li class="media widget-post align-items-center">
                 
-                <a href="https://hacksplained.it/blog/make-more-out-of-burp-community/">
-                  <img class="widget-img" src="https://hacksplained.it/images/blog/burp-community-to-pro/burp-gopro.png" alt="Make Burp Community feel a little more like Burp Professional">
+                <a href="https://hacksplained.it/blog/python-dependency-confusion/">
+                  <img class="widget-img" src="https://hacksplained.it/images/blog/python-dependency-confusion/python.jpg" alt="Python Dependency Confusion">
                 </a>
                 
                 <div class="media-body">
-                  <h5 class="h6 mb-0"><a href="https://hacksplained.it/blog/make-more-out-of-burp-community/">Make Burp Community feel a little more like Burp Professional</a></h5>
-                  <small>March 20, 2021</small>
+                  <h5 class="h6 mb-0"><a href="https://hacksplained.it/blog/python-dependency-confusion/">Python Dependency Confusion</a></h5>
+                  <small>March 5, 2021</small>
                 </div>
               </li>
             </ul>
